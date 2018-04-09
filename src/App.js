@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+
 import axios from "axios";
 
 import "./App.css";
@@ -55,12 +55,21 @@ class App extends Component {
         }
       });
   }
+
+  checkUser = () => {
+    axios
+      .get("/api/checkCookie")
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome!</h1>
         </header>
         <input onChange={e => this.usernameHandler(e.target.value)} />
         <input onChange={e => this.passwordHandler(e.target.value)} />
@@ -76,8 +85,9 @@ class App extends Component {
             this.createIt(this.state.usernameText, this.state.passwordText)
           }
         >
-          Register{" "}
+          Register
         </button>
+        <button onClick={this.checkUser}>CHECK</button>
       </div>
     );
   }

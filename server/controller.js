@@ -9,6 +9,7 @@ const accountCreation = (req, res) => {
       dbInstance
         .createUserAccount(username, hash)
         .then(response => {
+          console.log(response);
           res.status(200).json(response);
           req.session.user = response[0];
         })
@@ -47,8 +48,18 @@ const passwordChecker = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+// THIS FUNCTION ALLOWS THE FRONT END TO ACCESS THE BACKEND
+const getUser = (req, res) => {
+  // IF USER SESSION = STORED CREDENTIALS SEND BACK RESPONSE OTHERWISE ALERT DENIAL
+  if (req.session.user) {
+    res.status(200).send(req.session.user);
+  } else {
+    res.status(500).send("Error: User not logged in");
+  }
+};
 
 module.exports = {
   accountCreation,
-  passwordChecker
+  passwordChecker,
+  getUser
 };

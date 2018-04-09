@@ -22,7 +22,18 @@ const massiveConnection = massive(process.env.CONNECTION_STRING) // tell massive
   .then(db => app.set("db", db)) // if connection exists, set 'db' to db
   .catch(console.log);
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 2 * 7 * 24 * 60 * 60 * 1000
+    }
+  })
+);
 app.put("/api/hereComesThePwTest", controller.passwordChecker);
 app.put("/api/hereComesTheNewUser", controller.accountCreation);
+app.get("/api/checkCookie", controller.getUser);
 
 app.listen(port, () => console.log(`You are now listening to ${port}FM.`));
