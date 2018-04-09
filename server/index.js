@@ -4,7 +4,6 @@ const cors = require("cors");
 const { json } = require("body-parser");
 const massive = require("massive");
 const session = require("express-session");
-const path = require("path");
 const bcrypt = require("bcrypt");
 
 // CONTROLLER FILES
